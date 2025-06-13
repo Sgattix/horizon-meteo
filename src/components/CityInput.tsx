@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { MapPinIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function CityInput() {
+export default function CityInput({ className }: { className?: string }) {
   const [cityInput, setCityInput] = React.useState("");
   type City = { geoname_id: number; name: string; [key: string]: any };
   const [fetchedCities, setFetchedCities] = React.useState<City[]>([]);
@@ -39,7 +39,9 @@ export default function CityInput() {
   }, [cityInput]);
 
   return (
-    <div className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-t-lg shadow-lg mt-8">
+    <div
+      className={`w-2/3 bg-white dark:bg-gray-800 p-6 rounded-t-lg shadow-lg mt-8 !${className}`}
+    >
       <p className="text-gray-800 dark:text-gray-200">
         Enter your city to get the latest weather updates:
       </p>

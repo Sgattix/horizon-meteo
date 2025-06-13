@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar links={links} />
       <main className="flex flex-col items-center justify-center h-[75dvh] w-full">
         <Header />
-        <CityInput />
+        <CityInput className="max-w-md" />
         <div className="mt-0 w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-b-lg shadow-lg">
           <p>Discover the weather for: </p>
           {/* Top cities */}
