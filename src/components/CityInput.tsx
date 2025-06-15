@@ -18,17 +18,22 @@ export default function CityInput({ className }: { className?: string }) {
       return;
     }
 
-    console.log(`Fetching cities for input: ${cityInput}`);
     const controller = new AbortController();
     const signal = controller.signal;
     (async () => {
-      const response = await fetch(
-        `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=*&where=name%20LIKE%20%27${cityInput}%27&limit=20`,
-        { signal }
-      );
-      const data = await response.json();
-      console.log(data);
-      setFetchedCities(data.results);
+      try {
+        const response = await fetch(
+          `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=*&where=name%20LIKE%20%27${cityInput}%27&limit=20`,
+          { signal }
+        );
+        const data = await response.json();
+        setFetchedCities(data.results);
+      } catch (error) {
+        if (error instanceof Error) {
+          if (error.name === "AbortError") return; // Ignore abort errors
+          console.error("Error fetching cities:", error.message);
+        }
+      }
     })();
 
     return () => {
@@ -40,7 +45,7 @@ export default function CityInput({ className }: { className?: string }) {
 
   return (
     <div
-      className={`w-2/3 bg-white dark:bg-gray-800 p-6 rounded-t-lg shadow-lg mt-8 !${className}`}
+      className={`w-2/3 bg-white dark:bg-gray-800 p-6 rounded-t-lg shadow-lg mt-8 ${className}`}
     >
       <p className="text-gray-800 dark:text-gray-200">
         Enter your city to get the latest weather updates:
